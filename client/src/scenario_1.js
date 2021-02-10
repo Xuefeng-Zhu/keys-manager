@@ -1,6 +1,7 @@
 const utils = require('./utils');
 
 (async function () {
+  // Scenario 1: recover from losing your primary account key
   // You have lost the primary key of your account! However, you are able to continue to transact
   // and operate effortlessly by using other keys. You have set up your account (keys, weights, and thresholds)
   // in a way that enables you to continue to transact and interact with the blockchain effortlessly.

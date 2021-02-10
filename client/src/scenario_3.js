@@ -1,22 +1,19 @@
 const utils = require('./utils');
 
 (async function () {
-  // Scenario 2: manage lost or stolen keys
-  // You have set up 3 keys for your account and 2 keys have been stolen!
-  // Demonstrate how you would set up your account in a way that you can
-  // easily recover and remove the compromised keys.
+  // Scenario 3: use multiple keys to transact
+  // Build a use case where you would need multiple keys to complete a single transaction.
+  // Also, implement the requirement that multiple keys would be needed to make changes to the account.
 
   // To achive the task, we will:
   // 1. Set mainAccount's weight to 2.
   // 2. Set Keys Management Threshold to 2.
   // 3. Set Deploy Threshold to 1.
-  // 4. Add first new key with weight 2.
-  // 5. Add second new key with weight 2.
+  // 4. Add first new key with weight 1.
+  // 5. Add second new key with weight 1.
   // 6. Make a transfer from faucet using main account.
-  // 7. Remove mainAccount
-  // 8. Remove secondAccount
-  // 9. Add third new key with weight 2.
-  // 10. Make a transfer from first account using only first account.
+  // 7. Make a transfer from first account using both first and second account.
+  // 8. Add third new key with weight 1.
 
   let deploy;
 
@@ -49,40 +46,30 @@ const utils = require('./utils');
   await utils.sendDeploy(deploy, [mainAccount]);
   await utils.printAccount(mainAccount);
 
-  console.log('\n4. Add first new key with weight 2.\n');
-  deploy = utils.keys.setKeyWeightDeploy(mainAccount, firstAccount, 2);
+  console.log('\n4. Add first new key with weight 1.\n');
+  deploy = utils.keys.setKeyWeightDeploy(mainAccount, firstAccount, 1);
   await utils.sendDeploy(deploy, [mainAccount]);
   await utils.printAccount(mainAccount);
 
-  console.log('\n5. Add second new key with weight 2.\n');
-  deploy = utils.keys.setKeyWeightDeploy(mainAccount, secondAccount, 2);
+  console.log('\n5. Add second new key with weight 1.\n');
+  deploy = utils.keys.setKeyWeightDeploy(mainAccount, secondAccount, 1);
   await utils.sendDeploy(deploy, [mainAccount]);
   await utils.printAccount(mainAccount);
 
-  console.log('\n6. Make a transfer from faucet using main account.\n');
+  console.log('\n6. Make a transfer from faucet main account.\n');
   deploy = utils.transferDeploy(mainAccount, firstAccount, 1);
   await utils.sendDeploy(deploy, [mainAccount]);
   await utils.printAccount(mainAccount);
 
-  console.log('\n7. Remove the main account\n');
-  deploy = utils.keys.setKeyWeightDeploy(mainAccount, mainAccount, 0);
-  await utils.sendDeploy(deploy, [firstAccount]);
-  await utils.printAccount(mainAccount);
-
-  console.log('\n8. Remove the second account\n');
-  deploy = utils.keys.setKeyWeightDeploy(mainAccount, secondAccount, 0);
-  await utils.sendDeploy(deploy, [firstAccount]);
-  await utils.printAccount(mainAccount);
-
-  console.log('\n9. Add third new key with weight 2.\n');
-  deploy = utils.keys.setKeyWeightDeploy(mainAccount, thirdAccount, 2);
-  await utils.sendDeploy(deploy, [firstAccount]);
-  await utils.printAccount(mainAccount);
-
   console.log(
-    '\n10.Make a transfer from first account using only first account.\n'
+    '\n7.Make a transfer from first account using only both first and second account.\n'
   );
   deploy = utils.transferDeploy(firstAccount, secondAccount, 1);
-  await utils.sendDeploy(deploy, [firstAccount]);
+  await utils.sendDeploy(deploy, [firstAccount, secondAccount]);
+  await utils.printAccount(mainAccount);
+
+  console.log('\n8. Add third new key with weight 1.\n');
+  deploy = utils.keys.setKeyWeightDeploy(mainAccount, thirdAccount, 1);
+  await utils.sendDeploy(deploy, [firstAccount, secondAccount]);
   await utils.printAccount(mainAccount);
 })();
