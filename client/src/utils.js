@@ -45,7 +45,7 @@ async function sendDeploy(deploy, signingKeys) {
 }
 
 async function getDeploy(deployHash) {
-  let i = 1000;
+  let i = 100;
   while (i != 0) {
     try {
       return await client.getDeployByHash(deployHash);

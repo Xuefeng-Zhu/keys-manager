@@ -16,7 +16,7 @@ const utils = require('./utils');
   // 7. Remove mainAccount
   // 8. Remove secondAccount
   // 9. Add third new key with weight 2.
-  // 10. Make a transfer from first account using only first account.
+  // 10. Make a transfer from main account using only first account.
 
   let deploy;
 
@@ -80,9 +80,9 @@ const utils = require('./utils');
   await utils.printAccount(mainAccount);
 
   console.log(
-    '\n10.Make a transfer from first account using only first account.\n'
+    '\n10.Make a transfer from main account using only first account.\n'
   );
-  deploy = utils.transferDeploy(firstAccount, secondAccount, 1);
+  deploy = utils.transferDeploy(mainAccount, secondAccount, 1);
   await utils.sendDeploy(deploy, [firstAccount]);
   await utils.printAccount(mainAccount);
 })();

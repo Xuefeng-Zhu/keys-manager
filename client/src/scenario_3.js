@@ -12,7 +12,7 @@ const utils = require('./utils');
   // 4. Add first new key with weight 1.
   // 5. Add second new key with weight 1.
   // 6. Make a transfer from faucet using main account.
-  // 7. Make a transfer from first account using both first and second account.
+  // 7. Make a transfer from main account using both first and second account.
   // 8. Add third new key with weight 1.
 
   let deploy;
@@ -62,9 +62,9 @@ const utils = require('./utils');
   await utils.printAccount(mainAccount);
 
   console.log(
-    '\n7.Make a transfer from first account using only both first and second account.\n'
+    '\n7.Make a transfer from main account using only both first and second account.\n'
   );
-  deploy = utils.transferDeploy(firstAccount, secondAccount, 1);
+  deploy = utils.transferDeploy(mainAccount, secondAccount, 1);
   await utils.sendDeploy(deploy, [firstAccount, secondAccount]);
   await utils.printAccount(mainAccount);
 
